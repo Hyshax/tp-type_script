@@ -1,0 +1,23 @@
+{
+  "name": "typequest",
+  "version": "1.0.0",
+  "description": "TypeQuest - Un mini-jeu de rôle en TypeScript fonctionnant dans le terminal",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && chcp 65001 >nul && node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": ["typescript", "rpg", "terminal", "game"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10",
+    "@types/readline-sync": "^1.4.8"
+  }
+}
