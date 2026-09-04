@@ -9,15 +9,7 @@ import {
   TOTAL_ZONES,
 } from "../types/types";
 
-/**
- * Module d'affichage dans le terminal.
- *
- * Centralise toutes les sorties console du jeu
- * pour une présentation cohérente et lisible.
- */
 export class Display {
-  // ─── Utilitaires d'affichage ───────────────────────────────────
-
   private static readonly LINE = "==============================";
   private static readonly THIN_LINE = "------------------------------";
 
@@ -33,8 +25,6 @@ export class Display {
     console.log();
   }
 
-  // ─── Écran titre ───────────────────────────────────────────────
-
   public static title(): void {
     Display.blank();
     Display.printLine();
@@ -42,8 +32,6 @@ export class Display {
     Display.printLine();
     Display.blank();
   }
-
-  // ─── Affichage du héros ────────────────────────────────────────
 
   public static heroSheet(hero: Hero): void {
     Display.blank();
@@ -61,8 +49,6 @@ export class Display {
     Display.printLine();
     Display.blank();
   }
-
-  // ─── Sélection de classe ──────────────────────────────────────
 
   public static classSelection(): void {
     Display.blank();
@@ -82,8 +68,6 @@ export class Display {
       default: return null;
     }
   }
-
-  // ─── Combat ────────────────────────────────────────────────────
 
   public static combatHeader(hero: Hero, monster: MonsterInstance): void {
     Display.blank();
@@ -138,8 +122,6 @@ export class Display {
     Display.blank();
   }
 
-  // ─── Zones ─────────────────────────────────────────────────────
-
   public static zoneEntry(zoneNumber: number, zoneName: string, monsterName: string): void {
     Display.blank();
     Display.printLine();
@@ -158,8 +140,6 @@ export class Display {
     Display.printLine();
   }
 
-  // ─── Inventaire ────────────────────────────────────────────────
-
   public static inventory(items: ReadonlyArray<Item>): void {
     Display.blank();
     console.log("  ======== INVENTAIRE ========");
@@ -176,8 +156,6 @@ export class Display {
     Display.blank();
   }
 
-  // ─── Butin ─────────────────────────────────────────────────────
-
   public static lootFound(item: Item): void {
     console.log(`  [+] Vous trouvez : ${item.name} (${item.category}, valeur: ${item.value})`);
   }
@@ -186,8 +164,6 @@ export class Display {
     console.log("  Aucun objet trouve.");
   }
 
-  // ─── Progression ──────────────────────────────────────────────
-
   public static levelUp(hero: Hero, levelsGained: number): void {
     for (let i = 0; i < levelsGained; i++) {
       console.log(`  >> Niveau superieur ! Vous etes maintenant niveau ${hero.level - levelsGained + i + 1} !`);
@@ -195,8 +171,6 @@ export class Display {
     console.log(`  PV max: ${hero.maxHp} | ATK: ${hero.attack} | DEF: ${hero.defense}`);
     console.log(`  PV entierement restaures !`);
   }
-
-  // ─── Fin de partie ────────────────────────────────────────────
 
   public static defeat(hero: Hero, zoneReached: number): void {
     Display.blank();
@@ -236,8 +210,6 @@ export class Display {
     Display.blank();
   }
 
-  // ─── Actions entre combats ────────────────────────────────────
-
   public static betweenCombatMenu(): void {
     Display.blank();
     console.log("  Que souhaitez-vous faire ?");
@@ -249,7 +221,7 @@ export class Display {
   }
 
   public static invalidInput(): void {
-    console.log("  /!\ Choix invalide, veuillez reessayer.");
+    console.log("  /!\\ Choix invalide, veuillez reessayer.");
   }
 
   public static prompt(message: string): void {

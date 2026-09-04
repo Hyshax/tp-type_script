@@ -1,12 +1,5 @@
 import { MonsterTemplate } from "../types/types";
 
-/**
- * Bestiaire du jeu — définitions des monstres réguliers.
- *
- * Ces templates servent de moules : chaque rencontre génère
- * une instance indépendante à partir de ces données.
- */
-
 export const BESTIARY: ReadonlyArray<MonsterTemplate> = [
   {
     name: "Rat Geant",
@@ -50,10 +43,6 @@ export const BESTIARY: ReadonlyArray<MonsterTemplate> = [
   },
 ];
 
-/**
- * Template du boss final — ne doit JAMAIS apparaître
- * dans les rencontres aléatoires.
- */
 export const BOSS_TEMPLATE: MonsterTemplate = {
   name: "Dragon de TypeScript",
   hp: 220,
@@ -63,10 +52,6 @@ export const BOSS_TEMPLATE: MonsterTemplate = {
   goldReward: 100,
 };
 
-/**
- * Sélectionne un monstre aléatoire dans le bestiaire.
- * Le boss final n'est jamais inclus.
- */
 export function getRandomMonsterTemplate(): MonsterTemplate {
   const index = Math.floor(Math.random() * BESTIARY.length);
   return BESTIARY[index];

@@ -13,22 +13,10 @@ import {
 } from "../types/types";
 import * as readlineSync from "readline-sync";
 
-/**
- * Moteur principal de l'aventure TypeQuest.
- *
- * Orchestre la création du héros, la traversée des zones,
- * les combats, le butin, et le boss final.
- */
 export class Adventure {
   private hero!: Hero;
   private monstersDefeated: number = 0;
 
-  // ─── Création du héros ─────────────────────────────────────────
-
-  /**
-   * Demande au joueur de choisir un nom et une classe.
-   * Empêche l'utilisation d'une classe inexistante.
-   */
   private createHero(): void {
     Display.title();
 
@@ -51,13 +39,6 @@ export class Adventure {
     Display.heroSheet(this.hero);
   }
 
-  // ─── Menu entre les combats ────────────────────────────────────
-
-  /**
-   * Affiche le menu d'actions entre deux combats.
-   * Le joueur peut consulter son inventaire, utiliser un objet,
-   * voir sa fiche, ou continuer l'aventure.
-   */
   private betweenCombatMenu(): void {
     let continueMenu = true;
 
@@ -89,9 +70,6 @@ export class Adventure {
     }
   }
 
-  /**
-   * Sous-menu pour utiliser un objet de l'inventaire.
-   */
   private useItemMenu(): void {
     const items = this.hero.getInventory();
 
@@ -119,24 +97,15 @@ export class Adventure {
     }
   }
 
-  // ─── Récompenses post-combat ──────────────────────────────────
-
-  /**
-   * Applique les récompenses après une victoire :
-   * expérience, or, passage de niveau, et butin.
-   */
   private applyRewards(expGained: number, goldGained: number): void {
-    // Expérience et niveaux
     const levelsGained = this.hero.gainExperience(expGained);
 
     if (levelsGained > 0) {
       Display.levelUp(this.hero, levelsGained);
     }
 
-    // Or
     this.hero.gainGold(goldGained);
 
-    // Butin aléatoire
     const loot = LootSystem.generateLoot();
 
     if (loot !== null) {
@@ -147,20 +116,10 @@ export class Adventure {
     }
   }
 
-  // ─── Boucle principale ────────────────────────────────────────
-
-  /**
-   * Lance l'aventure complète :
-   * 1. Création du héros
-   * 2. Traversée de 3 zones avec monstres aléatoires
-   * 3. Boss final si le héros a survécu
-   * 4. Affichage du résumé
-   */
   public start(): void {
     this.createHero();
     this.monstersDefeated = 0;
 
-    // ── Traversée des zones ──────────────────────────────────
     for (let zone = 1; zone <= TOTAL_ZONES; zone++) {
       const zoneName = ZONE_NAMES[zone - 1];
       const monsterTemplate = getRandomMonsterTemplate();
@@ -168,7 +127,6 @@ export class Adventure {
 
       Display.zoneEntry(zone, zoneName, monster.name);
 
-      // Attente avant le combat
       readlineSync.question("  Appuyez sur Entree pour combattre...");
 
       const outcome = CombatSystem.fight(this.hero, monster);
@@ -179,21 +137,17 @@ export class Adventure {
         return;
       }
 
-      // Victoire — appliquer les récompenses
       this.monstersDefeated++;
       this.applyRewards(outcome.expGained, outcome.goldGained);
 
-      // Menu entre les combats (sauf avant le boss)
       if (zone < TOTAL_ZONES) {
         this.betweenCombatMenu();
       }
     }
 
-    // ── Boss final ───────────────────────────────────────────
     Display.bossEntry();
     readlineSync.question("  Appuyez sur Entree pour affronter le Dragon...");
 
-    // Menu optionnel avant le boss
     this.betweenCombatMenu();
 
     const boss = createMonsterInstance(BOSS_TEMPLATE);
@@ -205,7 +159,6 @@ export class Adventure {
       return;
     }
 
-    // Victoire finale !
     this.monstersDefeated++;
     this.applyRewards(bossOutcome.expGained, bossOutcome.goldGained);
 
@@ -213,11 +166,6 @@ export class Adventure {
     this.displaySummary(true, TOTAL_ZONES + 1);
   }
 
-  // ─── Résumé de fin de partie ──────────────────────────────────
-
-  /**
-   * Affiche le résumé complet de la partie.
-   */
   private displaySummary(victory: boolean, zoneReached: number): void {
     const summary: GameSummary = {
       heroName: this.hero.name,
