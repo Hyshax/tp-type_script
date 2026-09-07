@@ -1,3 +1,7 @@
+Projet réaliser par :
+Lafolie Jacques
+Marchiset Mattéo
+
 # TypeQuest
 
 Nom :  
